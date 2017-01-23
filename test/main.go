@@ -1,7 +1,7 @@
 package main
 
 import (
-	"ele/gocoder"
+	"github.com/electricface/gocoder"
 	"os"
 )
 
