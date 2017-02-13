@@ -12,7 +12,7 @@ type SourceCode struct {
 	Items   []fmt.Stringer
 }
 
-func NewSourceFile() *SourceCode {
+func NewSourceCode() *SourceCode {
 	sf := new(SourceCode)
 	sf.Imports.Type = "import"
 	return sf
