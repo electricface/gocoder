@@ -55,3 +55,39 @@ func (f *Function) String() string {
 	header := "func " + recv + f.Name + "(" + f.Arg + ") " + returns
 	return Comment(f.Desc) + header + " {\n" + f.Body.String() + "\n}\n"
 }
+
+// args: func name string, recvName string, desc string
+func newMethod(typeName string, p bool, args ...string) *Function {
+	nargs := len(args)
+	if !(1 <= nargs && nargs <= 3) {
+		panic("length of args must be 1 to 3")
+	}
+	recvType := typeName
+	if p {
+		recvType = "*" + recvType
+	}
+	fn := &Function{
+		Name:     args[0],
+		IsMethod: true,
+		RecvType: recvType,
+		RecvName: "self",
+	}
+	// narg is 2 or 3
+	if nargs > 1 && args[1] != "" {
+		fn.RecvName = args[1]
+	}
+
+	// narg is 3
+	if nargs > 2 {
+		fn.Desc = args[2]
+	}
+	return fn
+}
+
+func NewMethod(typeName string, args ...string) *Function {
+	return newMethod(typeName, false, args...)
+}
+
+func NewMethodP(typeName string, args ...string) *Function {
+	return newMethod(typeName, true, args...)
+}

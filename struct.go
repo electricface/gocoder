@@ -41,30 +41,7 @@ func (s *Struct) AppendField(field *StructField) {
 // default recv name is "self"
 // name string, recvName string, desc string
 func (s *Struct) newMethod(p bool, args ...string) *Function {
-	nargs := len(args)
-	if !(1 <= nargs && nargs <= 3) {
-		panic("length of args must be 1 to 3")
-	}
-	recvType := s.Name
-	if p {
-		recvType = "*" + s.Name
-	}
-	fn := &Function{
-		Name:     args[0],
-		IsMethod: true,
-		RecvType: recvType,
-		RecvName: "self",
-	}
-	// narg is 2 or 3
-	if nargs > 1 && args[1] != "" {
-		fn.RecvName = args[1]
-	}
-
-	// narg is 3
-	if nargs > 2 {
-		fn.Desc = args[2]
-	}
-	return fn
+	return newMethod(s.Name, p, args...)
 }
 
 func (s *Struct) NewMethodP(args ...string) *Function {
